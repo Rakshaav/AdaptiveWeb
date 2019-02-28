@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Pie chart
+	</title>
+
+	<style type="text/css">
+		body {
+    background-color: #1B1F2A;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+}
+
+.widget {
+    margin: 0 auto;
+    width:350px;
+    margin-top:50px;
+    background-color: #222D3A;
+    border-radius: 5px;
+    box-shadow: 0px 0px 1px 0px #06060d;
+
+}
+
+.header{
+    background-color: #29384D;
+    height:40px;
+    color:#929DAF;
+    text-align: center;
+    line-height: 40px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    font-weight: 400;
+    font-size: 1.5em;
+    text-shadow: 1px 1px #06060d;
+}
+
+.chart-container{
+    padding:25px;
+}
+
+.shadow {
+    -webkit-filter: drop-shadow( 0px 3px 3px rgba(0,0,0,.5) );
+    filter: drop-shadow( 0px 3px 3px rgba(0,0,0,.5) );
+}
+
+
+	</style>
+</head>
+<body>
+<div class="widget">
+    <div class="header">Interactive User Actions Chart</div>
+    <div id="chart" class="chart-container"></div>
+</div>
+<script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+    	var dataset = [
+    { name: 'Clicks', percent: 35.10 },
+    { name: 'Asked Question', percent: 14.68 },
+    { name: 'Scroll', percent: 31.51 },
+    { name: 'Vote', percent: 8.71 },
+    { name: 'Comment', percent: 10.01 }
+];
+
+var pie=d3.layout.pie()
+  .value(function(d){return d.percent})
+  .sort(null)
+  .padAngle(.03);
+
+var w=300,h=300;
+
+var outerRadius=w/2;
+var innerRadius=100;
+
+var color = d3.scale.category10();
+
+var arc=d3.svg.arc()
+  .outerRadius(outerRadius)
+  .innerRadius(innerRadius);
+
+var svg=d3.select("#chart")
+  .append("svg")
+  .attr({
+      width:w,
+      height:h,
+      class:'shadow'
+  }).append('g')
+  .attr({
+      transform:'translate('+w/2+','+h/2+')'
+  });
+var path=svg.selectAll('path')
+  .data(pie(dataset))
+  .enter()
+  .append('path')
+  .attr({
+      d:arc,
+      fill:function(d,i){
+          return color(d.data.name);
+      }
+  });
+
+path.transition()
+  .duration(1000)
+  .attrTween('d', function(d) {
+      var interpolate = d3.interpolate({startAngle: 0, endAngle: 0}, d);
+      return function(t) {
+          return arc(interpolate(t));
+      };
+  });
+
+
+var restOfTheData=function(){
+    var text=svg.selectAll('text')
+        .data(pie(dataset))
+        .enter()
+        .append("text")
+        .transition()
+        .duration(200)
+        .attr("transform", function (d) {
+            return "translate(" + arc.centroid(d) + ")";
+        })
+        .attr("dy", ".4em")
+        .attr("text-anchor", "middle")
+        .text(function(d){
+            return d.data.percent+"%";
+        })
+        .style({
+            fill:'#fff',
+            'font-size':'10px'
+        });
+
+    var legendRectSize=20;
+    var legendSpacing=7;
+    var legendHeight=legendRectSize+legendSpacing;
+
+
+    var legend=svg.selectAll('.legend')
+
+        .data(color.domain())
+        .enter()
+        .append('g')
+        .attr({
+            class:'legend',
+            transform:function(d,i){
+                //Just a calculation for x & y position
+                return 'translate(-35,' + ((i*legendHeight)-65) + ')';
+            }
+        });
+
+    legend.append('rect')
+        .attr({
+            width:legendRectSize,
+            height:legendRectSize,
+            rx:20,
+            ry:20
+        })
+        .style({
+            fill:color,
+            stroke:color
+        });
+
+    legend.append('text')
+        .attr({
+            x:30,
+            y:15
+        })
+        .text(function(d){
+            return d;
+        }).style({
+            fill:'#929DAF',
+            'font-size':'14px'
+        });
+
+};
+
+setTimeout(restOfTheData,1000);
+// var legend = d3.selectAll("path");
+// // console.log(legend[0]);
+//  var x = legend[0][0];
+//   console.log(x);
+// legend.on('click', function() {
+// 	 console.log("click");
+// 	 if(legend[0][0])
+// 	 {
+// 			 window.location.href="/index1";
+// 	 }
+//  });
+
+  var legend1 = d3.selectAll("path").filter(":nth-child(1)");
+	var legend2 = d3.selectAll("path").filter(":nth-child(2)");
+	var legend3 = d3.selectAll("path").filter(":nth-child(3)");
+	var legend4 = d3.selectAll("path").filter(":nth-child(4)");
+	var legend5 = d3.selectAll("path").filter(":nth-child(5)");
+
+	legend1.on('click', function() {
+				 window.location.href="/index1";
+
+	 });
+	 legend2.on('click', function() {
+					window.location.href="/index21";
+
+		});
+		legend3.on('click', function() {
+					 window.location.href="/index3";
+
+		 });
+		 legend4.on('click', function() {
+						window.location.href="/index4";
+
+			});
+			legend5.on('click', function() {
+						window.location.href="/index5";
+
+			});
+    </script>
+
+    <p style="color:white"> Click on the respective actions to see the user divisions on the action </p>
+<div>
+<h3 style="color:white"> Analysis And Findings </h3>
+ <p style="color:white">
+	  I have used pie charts for visualization, Pie charts make it easier to understand the data.
+		 The visualization was created from the data obtained from all the users. I have created a general pie chart here
+		  which shows me the total number of each action from all the users.I have considered the stackoverflow website,
+			we can see that click action has the highest record followed by scroll. This pie chart is an interactive visualization, if we click on any of the actions above we can see a pie chart showing the user distribution on these actions.
+			 <ul style="color:white"><li>Since click action has been implemented by most of the users,
+				  we can say that users are intersted in finding information.By clicking, they can go to hyperlinks which can be related to certain topics.For example if the user clicks on Java link/Tag, then possible tags/links that would be reccomended are classes, inheritance, interfaces and so on.</li><br/>
+					 <li>The second most done action was scroll, this shows that the users are looking to find information or are interested in commenting/voting and so on, if for instance the user scrolls through and reaches the end of the page and goes to the next page, then we can say that the information the user is looking for was present in the next page.</li><br/>
+					 <li>From the visualization created for the specific actions, we can see that 50% of the questions were asked by user bbb, this shows that there could be users who use the platform mainly for asking questions rather than commenting/voting or reading. </li>
+		 <ul>
+			  </p>
+			</div>
+	<h3 style="color:white;   padding-left:0px;"> Steps I took to find the results and why does it matter </h3>
+
+		 	<p style="color:white;padding-left:0px">
+		 		 What led me to get these results were the following questions:
+		 		  <ul style="color:white">
+		 				<li> Why have I created this chart? </li><br/>
+		 				<li> What is something that is standing out of this visualization? </li><br/>
+		 				<li> What does this mean in the context of the data? </li>
+		 			</ul><br/>
+		 		 <p style="color:white">Visualization matters because it helps us to easily understand the data, from this pie chart created I have come to the conclusion that some users like to comment more than others, some users prefer to ask questions rather than read and so on. This makes it easier for us to build user profiles, for example if there is a user that likes to answer questions then when that specific user logs in we can sort the questions asked according to the dates and display it to the user page. </p>
+		 	  </p>
+
+
+
+
+</body>
+
+</html>

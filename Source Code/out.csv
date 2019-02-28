@@ -1,0 +1,13 @@
+
+MongoDB shell version v4.0.1
+connecting to: mongodb://127.0.0.1:27017/newDataBase
+MongoDB server version: 4.0.1
+2018-09-16T23:51:25.431-0700 E QUERY    [js] ReferenceError: require is not defined :
+@(shell):1:9
+2018-09-16T23:51:25.432-0700 E QUERY    [js] TypeError: mongoose is undefined :
+@(shell):1:1
+2018-09-16T23:51:25.432-0700 E QUERY    [js] ReferenceError: console is not defined :
+@(shell):1:1
+2018-09-16T23:51:25.432-0700 E QUERY    [js] TypeError: db is undefined :
+@(shell):1:1
+bye

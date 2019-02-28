@@ -1,0 +1,40 @@
+<html>
+   <head>
+        <title>User Profile</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <style>
+        body
+        {
+            background-color: #1B1F2A;
+        }
+        h1
+        {
+          color:white;
+        }
+        li
+        {
+          color:white;
+        }
+         li a{
+           color:white;
+         }
+        </style>
+    </head>
+    <body>
+
+<div class="container">
+<h1> Register Form </h1>
+
+<form action="/register" method="POST">
+    <input type="text" name ="username" placeholder="username"></input>
+    <input type="password" name ="password" placeholder="password"></input>
+    <button>Submit</button>
+</form>
+
+<li> <a href="/register">Sign Up</a> </li>
+ <li> <a href="/login">Login</a> </li>
+ <li> <a href="/logout">Logout</a> </li>
+</div>
+</body>
+
+</html>
